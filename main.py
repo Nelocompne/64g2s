@@ -1,9 +1,11 @@
-from requests_html import HTMLSession
-session = HTMLSession()
+from requests_xml import XMLSession
+import sys
 
-URL = 'https://steamcommunity.com/groups/myanimeclan'
+session = XMLSession()
+# URL e.g. https://steamcommunity.com/groups/myanimeclan
 
-r = session.get(URL+'/memberslistxml/?xml=1')
-g = r.html.find('groupID64', first=True)
-print(int(g.text)-103582791429521408)
+r = session.get(sys.argv[1]+'/memberslistxml/?xml=1')
+g = r.xml.xpath('//groupID64', first=True)
+print('ID:', int(g.text)-103582791429521408)
+
 # 计算方法 https://forums.alliedmods.net/showthread.php?t=295678
