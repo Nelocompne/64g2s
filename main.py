@@ -1,10 +1,13 @@
 from requests_xml import XMLSession
-import sys
+import argparse
+
+parser = argparse.ArgumentParser(description='help')
+parser.add_argument('-u', dest='url', type=str, help='steam 组主页链接 e.g. https://steamcommunity.com/groups/myanimeclan')
+args = parser.parse_args()
 
 session = XMLSession()
-# URL e.g. https://steamcommunity.com/groups/myanimeclan
 
-r = session.get(sys.argv[1]+'/memberslistxml/?xml=1')
+r = session.get(args.url+'/memberslistxml/?xml=1')
 g = r.xml.xpath('//groupID64', first=True)
 print('ID:', int(g.text)-103582791429521408)
 
